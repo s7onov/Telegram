@@ -160,6 +160,7 @@ public class SharedMediaLayout extends FrameLayout implements NotificationCenter
     ActionBarPopupWindow optionsWindow;
     FlickerLoadingView globalGradientView;
     private final int viewType;
+    HintView savingRestrictedHintView;
 
     public boolean checkPinchToZoom(MotionEvent ev) {
         if (mediaPages[0].selectedType != 0 || getParent() == null) {
@@ -386,6 +387,7 @@ public class SharedMediaLayout extends FrameLayout implements NotificationCenter
     public ImageView photoVideoOptionsItem;
     private ActionBarMenuItem forwardItem;
     private ActionBarMenuItem gotoItem;
+    private boolean allowForward;
     private int searchItemState;
     private Drawable pinnedHeaderShadowDrawable;
     private boolean ignoreSearchCollapse;
@@ -1431,7 +1433,15 @@ public class SharedMediaLayout extends FrameLayout implements NotificationCenter
             forwardItem.setDuplicateParentStateEnabled(false);
             actionModeLayout.addView(forwardItem, new LinearLayout.LayoutParams(AndroidUtilities.dp(54), ViewGroup.LayoutParams.MATCH_PARENT));
             actionModeViews.add(forwardItem);
-            forwardItem.setOnClickListener(v -> onActionBarItemClick(forward));
+            TLRPC.Chat chat = profileActivity.getMessagesController().getChat(-dialog_id);
+            allowForward = !ChatObject.isSavingRestricted(chat);
+            final boolean isChannel = ChatObject.isChannel(chat);
+            forwardItem.setAlpha(allowForward ? 1f : 0.5f);
+            forwardItem.setOnClickListener(v -> {
+                    if (allowForward) onActionBarItemClick(forward);
+                    else showSavingRestrictedHint(context, isChannel);
+                }
+            );
         }
         deleteItem = new ActionBarMenuItem(context, null, Theme.getColor(Theme.key_actionBarActionModeDefaultSelector), Theme.getColor(Theme.key_windowBackgroundWhiteGrayText2), false);
         deleteItem.setIcon(R.drawable.msg_delete);
@@ -2141,6 +2151,21 @@ public class SharedMediaLayout extends FrameLayout implements NotificationCenter
         if (hasMedia[0] >= 0) {
             loadFastScrollData(false);
         }
+    }
+
+    private void showSavingRestrictedHint(Context context, boolean isChannel) {
+        if (savingRestrictedHintView == null) {
+            savingRestrictedHintView = new HintView(context, 7);
+            savingRestrictedHintView.setAlpha(0.0f);
+            savingRestrictedHintView.setVisibility(View.INVISIBLE);
+            savingRestrictedHintView.setShowingDuration(4000);
+            profileActivity.getLayoutContainer().addView(savingRestrictedHintView, LayoutHelper.createFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.RIGHT | Gravity.TOP, 10, 0, 10, 0));
+        }
+        if(isChannel) savingRestrictedHintView.setText(LocaleController.formatString("ForwardsRestrictedChannelHint", R.string.ForwardsRestrictedChannelHint));
+        else savingRestrictedHintView.setText(LocaleController.formatString("ForwardsRestrictedGroupHint", R.string.ForwardsRestrictedGroupHint));
+        savingRestrictedHintView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+        savingRestrictedHintView.setExtraTranslationY(-forwardItem.getMeasuredHeight()-savingRestrictedHintView.getMeasuredHeight());
+        savingRestrictedHintView.showForView(forwardItem, true);
     }
 
     private int getMessageId(View child) {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="AppName">Telegram</string>
-    <string name="AppNameBeta">Telegram Beta</string>
+    <string name="AppName">Quasigram</string>
+    <string name="AppNameBeta">Quasigram Beta</string>
     <string name="LanguageName">English</string>
     <string name="English">English</string>
     <string name="LanguageNameInEnglish">English</string>
@@ -594,6 +594,10 @@
     <string name="TypePublicGroup">Public</string>
     <string name="TypeLocationGroup">Link</string>
     <string name="TypeLocationGroupEdit">Tap to add a permanent link</string>
+    <string name="SavingContentHeader">Saving content</string>
+    <string name="RestrictSavingContent">Restrict Saving Content</string>
+    <string name="NoforwardsInfoChannel">Participants won\'t be able to forward messages from this channel or save media files.</string>
+    <string name="NoforwardsInfoGroup">Participants won\'t be able to forward messages from this group or save media files.</string>
     <string name="ChoosePhoto">Choose photo</string>
     <string name="ChoosePhotoOrVideo">Choose photo or video</string>
     <string name="AddPhoto">Set new photo</string>
@@ -776,6 +780,8 @@
     <string name="EventLogToggledInvitesHistoryOff">un1 made group history hidden for new members</string>
     <string name="EventLogToggledInvitesOn">un1 enabled group invites</string>
     <string name="EventLogToggledInvitesOff">un1 disabled group invites</string>
+    <string name="EventLogToggledNoForwardsOn">un1 enabled no forwards</string>
+    <string name="EventLogToggledNoForwardsOff">un1 disabled no forwards</string>
     <string name="EventLogToggledSignaturesOn">un1 enabled signatures</string>
     <string name="EventLogToggledSignaturesOff">un1 disabled signatures</string>
     <string name="EventLogRestrictedUntil">changed permissions for %1$s\n\nDuration: %2$s</string>
@@ -4809,4 +4815,8 @@
     <string name="UserAcceptedToGroupAction">un1 was accepted into the group</string>
     <string name="UserAcceptedToGroupPush">%1$s was accepted into the group</string>
     <string name="UserAcceptedToGroupPushWithGroup">%2$s|%1$s was accepted into the group</string>
+    <string name="ForwardsRestrictedChannelHint">Forwards from this channel are restricted</string>
+    <string name="ForwardsRestrictedGroupHint">Forwards from this group are restricted</string>
+    <string name="ForwardsRestrictedChannelInfo">Forwards from this channel \nare restricted.</string>
+    <string name="ForwardsRestrictedGroupInfo">Forwards from this group \nare restricted.</string>
 </resources>

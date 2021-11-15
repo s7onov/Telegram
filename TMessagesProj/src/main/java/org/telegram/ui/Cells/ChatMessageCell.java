@@ -3395,6 +3395,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
                     }
                     drawCommentNumber = false;
                     drawSideButton = isRepliesChat ? 2 : 3;
+                    if(ChatObject.isSavingRestricted(currentChat)) drawSideButton = 0;
                 }
             } else {
                 commentLayout = null;

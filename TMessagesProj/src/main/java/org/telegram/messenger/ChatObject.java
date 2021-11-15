@@ -1499,6 +1499,11 @@ public class ChatObject {
         return ChatObject.isChannel(chat) && chat.megagroup;
     }
 
+    public static boolean isSavingRestricted(TLRPC.Chat chat) {
+        if(chat != null) return chat.noforwards;
+        return false;
+    }
+
     public static boolean hasAdminRights(TLRPC.Chat chat) {
         return chat != null && (chat.creator || chat.admin_rights != null && chat.admin_rights.flags != 0);
     }

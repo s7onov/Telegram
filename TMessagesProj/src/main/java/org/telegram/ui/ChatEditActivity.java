@@ -1144,7 +1144,7 @@ public class ChatEditActivity extends BaseFragment implements ImageUpdater.Image
         if (info != null) {
             if (ChatObject.isChannel(currentChat) && info.hidden_prehistory != historyHidden) {
                 info.hidden_prehistory = historyHidden;
-                getMessagesController().toogleChannelInvitesHistory(chatId, historyHidden);
+                getMessagesController().toggleChannelInvitesHistory(chatId, historyHidden);
             }
         }
 
@@ -1169,7 +1169,7 @@ public class ChatEditActivity extends BaseFragment implements ImageUpdater.Image
         }
         if (signMessages != currentChat.signatures) {
             currentChat.signatures = true;
-            getMessagesController().toogleChannelSignatures(chatId, signMessages);
+            getMessagesController().toggleChannelSignatures(chatId, signMessages);
         }
         finishFragment();
     }

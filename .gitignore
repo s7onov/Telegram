@@ -4,3 +4,8 @@ build/
 obj/
 *.iml
 local.properties
+
+.cxx/
+config/
+afat/
+TMessagesProj/src/main/java/org/telegram/messenger/BuildVars.java

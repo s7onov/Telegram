@@ -23,7 +23,7 @@ public class NotificationImageProvider extends ContentProvider implements Notifi
 	private static final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
 
 	static {
-		matcher.addURI(AUTHORITY, "msg_media_raw/#/*", 1); // content://org.telegram..../msg_media_raw/account/filename.ext
+		matcher.addURI(AUTHORITY, "msg_media_raw/#/*", 1); // content://org.telegram.../msg_media_raw/account/filename.ext
 	}
 
 	private HashSet<String> waitingForFiles = new HashSet<>();

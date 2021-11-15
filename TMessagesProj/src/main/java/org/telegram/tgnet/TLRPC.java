@@ -37279,7 +37279,7 @@ public class TLRPC {
             newRights.add_admins = rights.add_admins;
             return newRights;
         }
-	}
+    }
 
 	public static class TL_chatForbidden_old extends TL_chatForbidden {
 		public static int constructor = 0xfb0ccc41;

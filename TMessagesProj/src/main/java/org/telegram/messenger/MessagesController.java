@@ -9090,7 +9090,7 @@ public class MessagesController extends BaseController implements NotificationCe
         });
     }
 
-    public void toogleChannelSignatures(long chatId, boolean enabled) {
+    public void toggleChannelSignatures(long chatId, boolean enabled) {
         TLRPC.TL_channels_toggleSignatures req = new TLRPC.TL_channels_toggleSignatures();
         req.channel = getInputChannel(chatId);
         req.enabled = enabled;
@@ -9102,7 +9102,7 @@ public class MessagesController extends BaseController implements NotificationCe
         }, ConnectionsManager.RequestFlagInvokeAfter);
     }
 
-    public void toogleChannelInvitesHistory(long chatId, boolean enabled) {
+    public void toggleChannelInvitesHistory(long chatId, boolean enabled) {
         TLRPC.TL_channels_togglePreHistoryHidden req = new TLRPC.TL_channels_togglePreHistoryHidden();
         req.channel = getInputChannel(chatId);
         req.enabled = enabled;
@@ -9110,6 +9110,22 @@ public class MessagesController extends BaseController implements NotificationCe
             if (response != null) {
                 processUpdates((TLRPC.Updates) response, false);
                 AndroidUtilities.runOnUIThread(() -> getNotificationCenter().postNotificationName(NotificationCenter.updateInterfaces, UPDATE_MASK_CHAT));
+            }
+        }, ConnectionsManager.RequestFlagInvokeAfter);
+    }
+
+    public void toggleNoForwards(long chatId, boolean enabled) {
+        TLRPC.TL_messages_toggleNoForwards req = new TLRPC.TL_messages_toggleNoForwards();
+        req.peer = getInputPeer(-chatId);
+        req.enabled = enabled;
+        getConnectionsManager().sendRequest(req, (response, error) -> {
+            if (response != null) {
+                processUpdates((TLRPC.Updates) response, false);
+                AndroidUtilities.runOnUIThread(() -> {
+                    getMessagesController().loadFullChat(chatId, 0, true);
+                    getNotificationCenter().postNotificationName(NotificationCenter.dialogsNeedReload);
+                    getNotificationCenter().postNotificationName(NotificationCenter.updateInterfaces, UPDATE_MASK_ALL);
+                });
             }
         }, ConnectionsManager.RequestFlagInvokeAfter);
     }
